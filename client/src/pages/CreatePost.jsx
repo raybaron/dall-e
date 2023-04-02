@@ -18,68 +18,67 @@ const CreatePost = () => {
   const [loading, setLoading] = useState(false);
 
   const generateImage = async () => {
-    if(form.prompt){
-      try{
+    if (form.prompt) {
+      try {
         setgeneratingImg(true);
 
-        const respone = await fetch('http://localhost:8080/api/v1/dalle',{
-          method:'POST',
-          headers:{
-            'Content-Type' : 'application/json'
+        const respone = await fetch('http://localhost:8080/api/v1/dalle', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
           },
-          body: JSON.stringify({prompt:form.prompt})
+          body: JSON.stringify({ prompt: form.prompt })
         });
 
         const data = await respone.json();
 
-        setform({...form,photo:`data:image/jpeg;base64,${data.photo}`})
+        setform({ ...form, photo: `data:image/jpeg;base64,${data.photo}` })
 
-      }catch(error){
+      } catch (error) {
         alert(error)
-      }finally{
+      } finally {
         setgeneratingImg(false)
       }
-    }else{
+    } else {
       alert('Please enter a prompt')
     }
   }
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if(form.prompt && form.photo){
+    if (form.prompt && form.photo) {
       setLoading(true);
 
-      try{
-        const response =  await fetch ('http://localhost:8080/api/v1/post',{
-          method:'POST',
-          headers:{
-            'Content-Type' : 'application/json'
+      try {
+        const response = await fetch('http://localhost:8080/api/v1/post', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
           },
-          body:JSON.stringify(form)
-
+          body: JSON.stringify(form)
         });
 
         await response.json();
         navigate('/');
 
-      }catch(error){
+      } catch (error) {
         alert(error)
-      }finally{
+      } finally {
         setLoading(false)
       }
-    }else{
+    } else {
       alert("Please enter a prompt and generate image")
     }
 
   }
   const handleChange = (e) => {
-      setform({...form,[e.target.name]:e.target.value})
+    setform({ ...form, [e.target.name]: e.target.value })
   }
 
   const handleSupriseMe = (e) => {
     const randomPrompt = getRandomPrompt(form.propmt)
-    setform({...form,prompt: randomPrompt})
+    setform({ ...form, prompt: randomPrompt })
   }
 
   return (
@@ -128,10 +127,10 @@ const CreatePost = () => {
 
 
         <div className='mt-10'>
-              <p className='mt-2 text-[#666e75] text-[14px]'>Once you have created an image you want, you can share it with the community</p>
-              <button type='submit'className='mt-3 text-white bg-[#6469ff] font-medium rounded-md text-sm w-full sm:w-auto px-5 py-2.5 text-center '>
-                {loading ? 'Sharing' : 'Share with the community'}
-              </button>
+          <p className='mt-2 text-[#666e75] text-[14px]'>Once you have created an image you want, you can share it with the community</p>
+          <button type='submit' className='mt-3 text-white bg-[#6469ff] font-medium rounded-md text-sm w-full sm:w-auto px-5 py-2.5 text-center '>
+            {loading ? 'Sharing' : 'Share with the community'}
+          </button>
         </div>
 
       </form>
