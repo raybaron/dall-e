@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index",
-    "build": "rm -rf dist && mkdir dist && babel src -d dist",
+    "build": "rm -rf dist && mkdir dist && ./node_modules/.bin/babel src -d dist",
     "serve": "node dist/index.js"
   },
   "keywords": [],
@@ -21,6 +21,9 @@
     "openai": "^3.2.1"
   },
   "devDependencies": {
+    "@babel/cli": "^7.21.0",
+    "@babel/core": "^7.21.4",
+    "@babel/preset-env": "^7.21.4",
     "nodemon": "^2.0.22"
   }
 }
