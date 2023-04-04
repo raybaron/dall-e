@@ -21,8 +21,7 @@ app.get('/',async(req,res)=>{
     res.send('Hello from home');
 })
 
-const startServer = async function (){
-    
+const startServer = async ()=>{
     try{
         connectDB(process.env.MONGODB_URL)
         app.listen(8080,()=>console.log('server has started on http://localhost:8080'))
@@ -30,6 +29,6 @@ const startServer = async function (){
         console.log(error)
     }
 
-}
+};
 
 startServer();
